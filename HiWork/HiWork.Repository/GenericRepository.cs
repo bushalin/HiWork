@@ -40,6 +40,7 @@ namespace HiWork.Repository
         }
 
         public virtual T Add(T entity)
+        
         {
             return Dbset.Add(entity);
         }

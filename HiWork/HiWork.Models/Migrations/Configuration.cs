@@ -5,7 +5,7 @@ namespace HiWork.Models.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<HiWorkDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<HiWork.Models.HiWorkDbContext>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@ namespace HiWork.Models.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(HiWorkDbContext context)
+        protected override void Seed(HiWork.Models.HiWorkDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -40,5 +40,13 @@ namespace HiWork.Controllers
             return Ok(_services.SaveUser(obj).Data);
         }
 
+
+        [Route("EditUser")]
+        [HttpPost]
+        public IHttpActionResult EditUser(User obj)
+        {
+            return Ok(_services.EditUser(obj));
+        }
+
     }
 }

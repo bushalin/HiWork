@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using HiWork.Models.Order;
+using HiWork.Models.Product;
 using HiWork.Models.SP_User;
 
 
@@ -23,7 +25,7 @@ namespace HiWork.Models
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
         }
 
-        #region Compnay DbSet
+        #region User DbSet
         public DbSet<User> User { get; set; }
         //public DbSet<CP_Device_Group> CP_Device_Group { get; set; }
         //public DbSet<CP_Device_License> CP_Device_License { get; set; }
@@ -35,6 +37,13 @@ namespace HiWork.Models
         //public DbSet<CP_Token> CP_Token { get; set; }
         //public DbSet<CP_User> CP_User { get; set; }
         //public DbSet<CP_User_LSession> CP_User_LSession { get; set; }
+        #endregion
+
+        #region Customer Related
+        public DbSet<ProductInfo> Product { get; set; }
+        public DbSet<Order.Order> Order { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
+
         #endregion
     }
 }

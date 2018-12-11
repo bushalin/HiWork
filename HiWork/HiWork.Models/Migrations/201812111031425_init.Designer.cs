@@ -7,13 +7,13 @@ namespace HiWork.Models.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class MyFirstMigration : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(MyFirstMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201812090836056_My-First-Migration"; }
+            get { return "201812111031425_init"; }
         }
         
         string IMigrationMetadata.Source

@@ -86,6 +86,51 @@ namespace HiWork.Services
             };
         }
 
+        public JsonResult EditUser(User obj)
+        {
+            var message = "";
+            bool testReturn;
+
+            List<object> avoidProperties = new List<object>();
+            avoidProperties.Add(obj.Username);
+            
+            _services.Update(obj, avoidProperties);
+
+            if (!IsUsernameFound(obj.Username))
+            {
+                message = "This User does not exist!";
+                Generator.IsReport = "Warning";
+            }
+            else
+            {
+                try
+                {
+                    testReturn = _services.Update(obj, avoidProperties);
+                    _services.SaveChanges();
+                    message = "User Edited successfully !";
+                    Generator.IsReport = "Ok";
+
+                }
+                catch (Exception ex)
+                {
+                    //message = "Something went wrong ! Please contact system administrator.";
+                    message = ex.Message;
+                    Generator.IsReport = "NotOk";
+                }
+            }
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Message = message,
+                    Generator.IsReport
+
+                },
+
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         public JsonResult SaveUser(User obj)
         {
             var message = "";
@@ -96,17 +141,16 @@ namespace HiWork.Services
                 Generator.IsReport = "Warning";
             }
             else if (IsUsernameFound(obj.Username)){
-                message = "Username exists ! Please choose a differnet username.";
+                message = "Username exists ! Please choose a different username.";
                 Generator.IsReport = "Warning";
             }
             else
             {
-                
                 try
                 {
                     _services.Save(obj);
                     _services.SaveChanges();
-                    message = "User saved succesfully !";
+                    message = "User saved successfully !";
                     Generator.IsReport = "Ok";
 
                 }
@@ -116,13 +160,7 @@ namespace HiWork.Services
                     message = ex.Message;
                     Generator.IsReport = "NotOk";
                 }
-
             }
-
-
-
-
-
             return new JsonResult
             {
                 Data  = new
@@ -135,7 +173,6 @@ namespace HiWork.Services
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
     }
 
     public interface ISP_UserServices
@@ -143,5 +180,6 @@ namespace HiWork.Services
         JsonResult GetUserList();
         JsonResult GetUserDetailsById(int userId);
         JsonResult SaveUser(User obj);
+        JsonResult EditUser(User obj);
     }
 }
