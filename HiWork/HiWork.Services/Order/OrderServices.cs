@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -19,10 +20,35 @@ namespace HiWork.Services.Order
             _services = new EntityService<Models.Order.Order>(_context);
         }
 
-        public JsonResult GetOrderDetails(int orderId)
+        public JsonResult GetOrderDetailsById(int orderId)
         {
-            var result = _context.Order.Join(_context.OrderDetails, x => x.Id, y => y.OrderId,
-                (x, y) => new {x = x, y = y}).Where(z => z.y.OrderId == orderId);
+            var result = _context.Order.Where(o => o.Id == orderId)         //find the data from order which have the same id as orderId
+                .Join(_context.User,                                        //joining the two tables
+                    o => o.UserId,                                          //order table foreign key
+                    u => u.Id,                                              //user table primary key
+                    (o, u) => new {Order = o, User = u})                    //defining name as order = o and user = u
+                .Select(x => new                                            //now selecting all the data that have the orderId and gathering those data in another table defined by x
+                {
+                    x.Order.OrderAmount,
+                    x.User.FirstName,
+                    x.User.LastName,                                        //selecting the values that need to be saved
+                    x.User.Address,
+                    x.User.Email,
+                    x.User.Gender,
+                    x.User.Mobile,
+
+                    OrderDetail = _context.OrderDetails.Where(od => od.OrderId == x.Order.Id)           //now selecting the data for joining the tables OrderDetails and Order
+                        .Join(_context.Product,                                                         //joining the two tables order and productinfo
+                            od => od.ProductInfoId,                                                     //defining the pk and fk
+                            p => p.Id,
+                            (od, p) => new {OrderDetail = od, Product = p})                             //renaming those tables as such
+                        .Select(k => new                                                                //selecting and gathering data on a new table k, where we have the selected order details
+                        {
+                            k.Product.ProductModel,                                                     //selecting the product information
+                            k.Product.ProductName
+                        }).ToList()                                                                     //one order can have multiple products so it is a list
+                }).FirstOrDefault();                                                                    //order itself is a singular order, so it is a singular data
+
             return new JsonResult()
             {
                 Data = result,
@@ -50,6 +76,6 @@ namespace HiWork.Services.Order
     public interface IOrderServices
     {
         JsonResult GetOrderById(int orderId);
-        JsonResult GetOrderDetails(int orderId);
+        JsonResult GetOrderDetailsById(int orderId);
     }
 }

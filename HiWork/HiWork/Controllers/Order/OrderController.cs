@@ -28,7 +28,7 @@ namespace HiWork.Controllers.Order
         [HttpGet]
         public IHttpActionResult GetOrderDetailsById(int orderId)
         {
-            return Ok(_services.GetOrderDetails(orderId));
+            return Ok(_services.GetOrderDetailsById(orderId));
         }
     }
 }
