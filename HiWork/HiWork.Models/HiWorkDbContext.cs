@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using HiWork.Models.CompanyInformation;
 using HiWork.Models.Order;
 using HiWork.Models.Product;
 using HiWork.Models.SP_User;
@@ -23,6 +24,7 @@ namespace HiWork.Models
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
         #region User DbSet
@@ -43,6 +45,20 @@ namespace HiWork.Models
         public DbSet<ProductInfo> Product { get; set; }
         public DbSet<Order.Order> Order { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
+
+        #endregion
+
+        #region Company Information
+
+        public DbSet<IndustryCategory> IndustryCategory { get; set; }
+        public DbSet<Industry> Industry { get; set; }
+        public DbSet<Country> Country { get; set; }
+        public DbSet<City> City { get; set; }
+        public DbSet<Currency> Currency { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Company> Company { get; set; }
+        public DbSet<CompanyCities> CompanyCities { get; set; }
+        public DbSet<CompanyIndustries> CompanyIndustries { get; set; }
 
         #endregion
     }

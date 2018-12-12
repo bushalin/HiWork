@@ -74,7 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Customer\CustomerServices.cs" />
+    <Compile Include="CompanyInformation\CompanyInformationServices.cs" />
     <Compile Include="EntityServices.cs" />
     <Compile Include="Order\OrderServices.cs" />
     <Compile Include="Product\ProductServices.cs" />

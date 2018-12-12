@@ -71,11 +71,28 @@
   <ItemGroup>
     <Compile Include="Common\AuditableEntity.cs" />
     <Compile Include="Common\Entity.cs" />
+    <Compile Include="CompanyInformation\City.cs" />
+    <Compile Include="CompanyInformation\Company.cs" />
+    <Compile Include="CompanyInformation\CompanyCities.cs" />
+    <Compile Include="CompanyInformation\CompanyIndustries.cs" />
+    <Compile Include="CompanyInformation\Country.cs" />
+    <Compile Include="CompanyInformation\Currency.cs" />
+    <Compile Include="CompanyInformation\Department.cs" />
+    <Compile Include="CompanyInformation\Industry.cs" />
+    <Compile Include="CompanyInformation\IndustryCategory.cs" />
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="HiWorkDbContext.cs" />
     <Compile Include="Migrations\201812111031425_init.cs" />
     <Compile Include="Migrations\201812111031425_init.Designer.cs">
       <DependentUpon>201812111031425_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812120855544_CompanyInformation adding.cs" />
+    <Compile Include="Migrations\201812120855544_CompanyInformation adding.Designer.cs">
+      <DependentUpon>201812120855544_CompanyInformation adding.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812120915186_Company information adding with nullable.cs" />
+    <Compile Include="Migrations\201812120915186_Company information adding with nullable.Designer.cs">
+      <DependentUpon>201812120915186_Company information adding with nullable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Order\Order.cs" />
@@ -92,6 +109,13 @@
     <EmbeddedResource Include="Migrations\201812111031425_init.resx">
       <DependentUpon>201812111031425_init.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120855544_CompanyInformation adding.resx">
+      <DependentUpon>201812120855544_CompanyInformation adding.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120915186_Company information adding with nullable.resx">
+      <DependentUpon>201812120915186_Company information adding with nullable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
