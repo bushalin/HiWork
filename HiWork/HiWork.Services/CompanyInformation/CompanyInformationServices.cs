@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,38 +47,92 @@ namespace HiWork.Services.CompanyInformation
 
         public JsonResult GetCompanyDetailsById(int companyId)
         {
+            //var result = _context.Company.Where(c => c.Id == companyId)
+            //    .Join(_context.CompanyCities,
+            //        c => c.Id,
+            //        cc => cc.CompanyId,
+            //        (c, cc) => new {Company = c, CompanyCities = cc})
+            //    .Select(x => new
+            //    {
+            //        x = x.Company,
+
+            //        CompanyCities = _context.CompanyCities.Where(ccities => ccities.CompanyId == x.Company.Id)
+            //            .Join(_context.City,
+            //                ccities => ccities.CityId,
+            //                city => city.Id,
+            //                (ccities, city) => new { CompanyCity = ccities, City = city })
+            //            .Select(k => new
+            //            {
+            //                k.City.CityName,
+            //                k.City.Id,
+            //                k.City.Country.CountryName
+            //            }).ToList()
+            //        //Industry = _context.CompanyIndustries.Where(ci => ci.CompanyId == x.Company.IndustryId)
+            //        //    .Join(_context.Industry,
+            //        //        ci => ci.IndustryId,
+            //        //        i => i.Id,
+            //        //        (ci, i) => new {CompanyIndustries = ci, i = Industry})
+            //        //    .Select(z = new
+            //        //    {
+            //        //        z = z
+            //        //    }).ToList()
+            //    }).FirstOrDefault();
+
+
             var result = _context.Company.Where(c => c.Id == companyId)
-                .Join(_context.CompanyCities,
-                    c => c.Id,
-                    cc => cc.CompanyId,
-                    (c, cc) => new {Company = c, CompanyCities = cc})
+                .Join(_context.Department,
+                    c => c.DepartmentId,
+                    d => d.Id,
+                    (c, d) => new {Company = c, Department = d})
+                .Join(_context.Currency,
+                    cx => cx.Company.CurrencyId,
+                    cu => cu.Id,
+                    (cx, cu) => new {Company = cx, Currency = cu})
                 .Select(x => new
                 {
-                    x = x.Company,
+                    x.Company.Company.CompanyName,
+                    x.Company.Company.EMail,
+                    x.Company.Company.Designation,
+                    x.Company.Company.ContactPersonName,
+                    x.Company.Company.ContactPersonPhone,
+                    x.Company.Company.PostalCode,
+                    x.Company.Company.AddressLine1,
+                    x.Company.Company.AddressLine2,
+                    x.Company.Company.AddressLine3,
+                    x.Company.Company.Website,
+                    x.Company.Company.RepresentativeName,
+                    x.Company.Company.BusinessContent,
+                    x.Company.Company.CompanyIntro,
+                    x.Company.Company.ForeginersRecrDes,
+                    x.Company.Company.DOE,
+                    x.Company.Company.Capital,
+                    x.Company.Company.NoOfEmployees,
+                    x.Company.Company.ForeginersRecrExperience,
+                    x.Company.Company.ForeginersRecrQty,
+                    x.Company.Department.DepartmentName,
+                    x.Currency.CurrencyName,
 
-                    CompanyCities = _context.CompanyCities.Where(ccities => ccities.CompanyId == x.Company.Id)
+                    CompanyCities = _context.CompanyCities.Where(ccities => ccities.CompanyId == x.Company.Company.Id)
                         .Join(_context.City,
                             ccities => ccities.CityId,
                             city => city.Id,
-                            (ccities, city) => new { CompanyCity = ccities, City = city })
+                            (ccities, city) => new {CompanyCity = ccities, City = city})
                         .Select(k => new
                         {
                             k.City.CityName,
-                            k.City.Id,
                             k.City.Country.CountryName
-                        }).ToList()
-                    //Industry = _context.CompanyIndustries.Where(ci => ci.CompanyId == x.Company.IndustryId)
-                    //    .Join(_context.Industry,
-                    //        ci => ci.IndustryId,
-                    //        i => i.Id,
-                    //        (ci, i) => new {CompanyIndustries = ci, i = Industry})
-                    //    .Select(z = new
-                    //    {
-                    //        z = z
-                    //    }).ToList()
-                }).FirstOrDefault();
-            
+                        }).ToList(),
 
+                    CompanyIndustries = _context.CompanyIndustries.Where(cind => cind.CompanyId == x.Company.Company.Id)
+                        .Join(_context.Industry,
+                            ci => ci.IndustryId,
+                            i => i.Id,
+                            (ci, i) => new{CompanyIndustries = ci, Industry = i})
+                        .Select(r => new
+                        {
+                            r = r
+                        }).ToList()
+                }).FirstOrDefault();
             return new JsonResult
             {
                 Data = result,

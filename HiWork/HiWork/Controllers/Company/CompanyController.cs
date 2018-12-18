@@ -19,11 +19,11 @@ namespace HiWork.Controllers.Company
         }
 
 
-        [Route("GetCompanyDetailsById/{orderId:int}")]
+        [Route("GetCompanyDetailsById/{companyId:int}")]
         [HttpGet]
-        public IHttpActionResult GetCompanyDetailsById(int orderId)
+        public IHttpActionResult GetCompanyDetailsById(int companyId)
         {
-            return Ok(_services.GetCompanyDetailsById(orderId));
+            return Ok(_services.GetCompanyDetailsById(companyId));
         }
     }
 }

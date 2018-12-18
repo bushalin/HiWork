@@ -1,0 +1,78 @@
+﻿<html>
+<head>
+    <title>The jQuery Example</title>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    </script>
+
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $("#searchbtn").click(function (event) {
+
+                var idNumber = $("#companyId").val();
+                $.getJSON('/Api/Company/GetCompanyDetailsById/'+ idNumber,
+                    function (jd) {
+                        $('#stage').html('<p> Company Name: ' + jd.Data.CompanyName + '</p></br>');
+                        $('#stage').append('<p> eMail : ' + jd.Data.EMail + '</p></br>');
+                        $('#stage').append('<p> Designation: ' + jd.Data.Designation + '</p>');
+                        $('#stage').append('<p> Contact Person Name: ' + jd.Data.ContactPersonName + '</p>');
+                        $('#stage').append('<p> Contact Person Phone: ' + jd.Data.ContactPersonPhone + '</p>');
+                        $('#stage').append('<p> PostalCode: ' + jd.Data.PostalCode + '</p>');
+                        $('#stage').append('<p> AddressLine1: ' + jd.Data.AddressLine1 + '</p>');
+                        $('#stage').append('<p> AddressLine2: ' + jd.Data.AddressLine2 + '</p>');
+                        $('#stage').append('<p> AddressLine3: ' + jd.Data.AddressLine3 + '</p>');
+                        $('#stage').append('<p> Website: ' + jd.Data.Website + '</p>');
+                        $('#stage').append('<p> Representative Name: ' + jd.Data.RepresentativeName + '</p>');
+                        $('#stage').append('<p> CompanyIntro: ' + jd.Data.CompanyIntro + '</p>');
+                        $('#stage').append('<p> Foreigners Recr Des: ' + jd.Data.ForeginersRecrDes + '</p>');
+                        $('#stage').append('<p> DOE: ' + jd.Data.DOE + '</p>');
+                        $('#stage').append('<p> Capital: ' + jd.Data.Capital + '</p>');
+                        $('#stage').append('<p> No Of Employees: ' + jd.Data.NoOfEmployees + '</p>');
+                        $('#stage').append('<p> Foreigners Recr Experience: ' +
+                            jd.Data.ForeginersRecrExperience +
+                            '</p>');
+                        $('#stage').append('<p> Foreigners Recr Qty: ' + jd.Data.ForeginersRecrQty + '</p>');
+                        $('#stage').append('<p> Department Name: ' + jd.Data.DepartmentName + '</p>');
+                        $('#stage').append('<p> Currency Name: ' + jd.Data.CurrencyName + '</p>');
+                        //$.each(jd.Data,
+                        //    function (index, value) {
+                        //        console.log(index);
+                        //        console.log(value);
+                        //        $('#stage').append('<p>' + value + '</p>');
+                        //    });
+
+                        $.each(jd.Data.CompanyCities,
+                            function (index1, value1) {
+                                console.log(index1);
+                                console.log(value1.CityName);
+
+                                $('#CompanyCities').append('<tr><td>' + value1.CityName + '</td><td>' + value1.CountryName + '</td></tr>');
+                                //  $('#stage').append('<p>' + value1.CityName + '</p>');
+                            });
+                    });
+
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <p>Search the desired company information by id - Recommended id = 7</p>
+
+    <div id="stage" style="background-color:#eee;">
+        COMPANY
+    </div>
+    <input type="text" id="companyId" name="idNumber"/>
+<input type="button" id="searchbtn" value="Search" />
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        </thead>
+        <h5>Branches</h5>
+        <tbody id="CompanyCities"></tbody>
+    </table>
+</body>
+</html>

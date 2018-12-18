@@ -14,5 +14,10 @@ namespace HiWork.Controllers
 
             return View();
         }
+
+        //public ActionResult ShowCompanyInfo()
+        //{
+        //    return View();
+        //}
     }
 }
